@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plaid", "PlaidUniversal\Plaid.csproj", "{F5831F4D-98F0-4FDD-ABCC-A1B106C0F96D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plaid", "Plaid\Plaid.csproj", "{F5831F4D-98F0-4FDD-ABCC-A1B106C0F96D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaidUnitTests", "PlaidUnitTests\PlaidUnitTests.csproj", "{D3FACE30-D62F-4273-BCC0-751B84AB8152}"
 EndProject
