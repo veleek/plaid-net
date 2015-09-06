@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ben.Plaid
 {
-	public class PlaidTest
+	public static class PlaidTest
 	{
 		public const string ClientId = "test_id";
 		public const string ClientSecret = "test_secret";
@@ -17,7 +17,7 @@ namespace Ben.Plaid
 		public const string LockedPassword = "plaid_locked";
 		public const string Pin = "1234";
 
-		public static string GetTestAccessToken(Institution institution)
+		public static string GetTestAccessToken(this Institution institution)
 		{
 			return GetTestAccessToken(institution.Type);
 		}

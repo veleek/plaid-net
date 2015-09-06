@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ben.Plaid;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Ben.Plaid.Test
 {
@@ -36,19 +36,31 @@ namespace Ben.Plaid.Test
 			Assert.AreEqual(DefaultInstitutionName, institution.Name);
 		}
 
-		[TestMethod]
-		public async Task AddAuth()
-		{
-			var auth = await this.Client.AddAuthAsync(PlaidTest.UserName, PlaidTest.Password, DefaultInstitutionType);
+        [TestMethod]
+        public async Task AddAuth()
+        {
+            var auth = await this.Client.AddAuthAsync(PlaidTest.UserName, PlaidTest.Password, DefaultInstitutionType);
 
-			Assert.IsNotNull(auth);
-			auth.Dump();
+            Assert.IsNotNull(auth);
+            auth.Dump();
 
-			Assert.IsNotNull(auth.AccessToken);
-			auth.AccessToken.Dump();
-		}
+            Assert.IsNotNull(auth.AccessToken);
+            auth.AccessToken.Dump();
+        }
 
-		[TestMethod]
+        [TestMethod]
+        public async Task AddAuthUsaa()
+        {
+            var auth = await this.Client.AddAuthAsync(PlaidTest.UserName, PlaidTest.Password, "usaa", PlaidTest.Pin);
+
+            Assert.IsNotNull(auth);
+            auth.Dump();
+
+            Assert.IsNotNull(auth.AccessToken);
+            auth.AccessToken.Dump();
+        }
+
+        [TestMethod]
 		public async Task GetAuth()
 		{
 			var token = await this.GetTestAccessToken();
@@ -69,7 +81,7 @@ namespace Ben.Plaid.Test
 		public async Task AddConnectOptions()
 		{
 			var options = new ConnectOptions {LoginOnly = false, StartDate = "5 days ago", List = true};
-			var addResponse = await this.Client.AddConnectAsync(PlaidTest.UserName, PlaidTest.Password, DefaultInstitutionType, options);
+			var addResponse = await this.Client.AddConnectAsync(PlaidTest.UserName, PlaidTest.Password, DefaultInstitutionType, options: options);
 			addResponse.Dump();
 		}
 

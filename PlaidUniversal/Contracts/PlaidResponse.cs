@@ -1,29 +1,33 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net;
 
 namespace Ben.Plaid
 {
 	public class PlaidResponse
 	{
+        public HttpStatusCode StatusCode { get; set; }
+
 		public List<PlaidAccount> Accounts { get; set; }
 
 		public List<Transaction> Transactions { get; set; }
 
+        public bool MfaStepRequired { get { return this.StatusCode == HttpStatusCode.Created; } }
+
 		/// <summary>
 		/// Gets or sets the type of the MFA required if MFA is required
 		/// </summary>
-		public string Type { get; set; }
+        [JsonProperty("type")]
+		public string MfaType { get; set; }
 
-		public JObject Mfa { get; set; }
+		public JToken Mfa { get; set; }
 
-		public MfaQuestion[] Questions => this.Mfa.ToObject<MfaQuestion[]>();
+		public MfaQuestion[] Questions => this.MfaType == "questions" || this.MfaType == "selections" ? this.Mfa.ToObject<MfaQuestion[]>() : null;
 
-		public MfaCodeType[] Codes => this.Mfa.ToObject<MfaCodeType[]>();
+		public MfaCodeType[] Codes => this.MfaType == "codes" ? this.Mfa.ToObject<MfaCodeType[]>() : null;
 
 		public MfaCodeResult CodeResult => this.Mfa.ToObject<MfaCodeResult>();
-
-
 
 		[JsonProperty("access_token")]
 		public string AccessToken { get; set; }

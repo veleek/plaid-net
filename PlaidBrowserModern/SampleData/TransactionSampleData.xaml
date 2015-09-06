@@ -1,0 +1,6 @@
+﻿<PlaidResponse xmlns="using:Ben.Plaid">
+    <PlaidResponse.Transactions>
+        <Transaction Name="Foo" Amount="123.45" Date="10/15/2015 3:00 PM"/>
+        <Transaction Name="Bar" Amount="-123.45"/>
+    </PlaidResponse.Transactions>
+</PlaidResponse>

@@ -1,3 +1,6 @@
 .vs/
 packages/
 *.user
+/PlaidBrowserModern/AppPackages
+bin/
+obj/

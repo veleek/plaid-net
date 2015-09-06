@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ben.Plaid
+﻿namespace Ben.Plaid
 {
-	public class PlaidErrorResponse
+    public class PlaidErrorResponse
 	{
-		public string Code { get; set; }
+		public int Code { get; set; }
 
 		public string Message { get; set; }
 

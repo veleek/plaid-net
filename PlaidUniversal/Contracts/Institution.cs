@@ -24,7 +24,7 @@ namespace Ben.Plaid
 
 		public override string ToString()
 		{
-			return string.Format("Id: {0}, Name: {1}, Type: {2}, Products: {3}", this.Id, this.Name, this.Type, string.Join(", ", this.Products.Select(p => p.ToString())));
+			return string.Format("{1} ({0}) Type: {2}, Products: {3}", this.Id, this.Name, this.Type, string.Join(", ", this.Products.Select(p => p.ToString())));
 		}
 	}
 }

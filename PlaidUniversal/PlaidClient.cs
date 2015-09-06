@@ -20,7 +20,7 @@ namespace Ben.Plaid
 
 		#region Connect Methods
 
-		public async Task<PlaidResponse> AddConnectAsync(string username, string password, string type, ConnectOptions options = null)
+		public async Task<PlaidResponse> AddConnectAsync(string username, string password, string type, string pin = null, ConnectOptions options = null)
 		{
 			var parameters = new Dictionary<string, string>()
 			{
@@ -31,7 +31,21 @@ namespace Ben.Plaid
 				{"type", type},
 			};
 
-			if (options != null)
+            if (type.ToLower() == "usaa")
+            {
+                if (pin == null)
+                {
+                    throw new ArgumentException("You must provide a pin code with USAA.", "pin");
+                }
+
+                parameters.Add("pin", pin);
+            }
+            else if (pin != null)
+            {
+                throw new ArgumentException("Pin code should only be provided with USAA.", "pin");
+            }
+
+            if (options != null)
 			{
 				parameters.Add("options", JsonConvert.SerializeObject(options));
 			}
@@ -41,7 +55,18 @@ namespace Ben.Plaid
 			return await HandleResponseAsync<PlaidResponse>(response);
 		}
 
-		public async Task<PlaidResponse> AddConnectStepAsync(string accessToken, string mfaResponse)
+        /// <summary>
+        /// Allows submitting one or more selections for selection based MFA
+        /// </summary>
+        /// <param name="accessToken">The access token for the request</param>
+        /// <param name="selections">The list of selected answes from the available set.</param>
+        /// <returns></returns>
+        public Task<PlaidResponse> AddConnectStepAsync(string accessToken, string[] selections)
+        {
+            return AddConnectStepAsync(accessToken, JsonConvert.SerializeObject(selections));
+        }
+
+        public async Task<PlaidResponse> AddConnectStepAsync(string accessToken, string answer)
 		{
 			if (string.IsNullOrWhiteSpace(accessToken))
 			{
@@ -53,7 +78,7 @@ namespace Ben.Plaid
 				{"client_id", this.clientId},
 				{"secret", this.clientSecret},
 				{"access_token", accessToken},
-				{"mfa", mfaResponse},
+				{"mfa", answer },
 			};
 
 			var stepRequestContent = new FormUrlEncodedContent(parameters);
@@ -61,7 +86,7 @@ namespace Ben.Plaid
 			return await HandleResponseAsync<PlaidResponse>(response);
 		}
 
-		public async Task<PlaidResponse> AddConnectStepAsync(string accessToken, MultiFactorAuthOptions options)
+		public async Task<PlaidResponse> AddConnectStepAsync(string accessToken, string selection, MultiFactorAuthOptions options = null)
 		{
 			if (string.IsNullOrWhiteSpace(accessToken))
 			{
@@ -78,6 +103,7 @@ namespace Ben.Plaid
 				{"client_id", this.clientId},
 				{"secret", this.clientSecret},
 				{"access_token", accessToken},
+                {"mfa", selection },
 				{"options", JsonConvert.SerializeObject(options)},
 			};
 
@@ -114,7 +140,7 @@ namespace Ben.Plaid
 
 		#region Auth Methods
 
-		public async Task<PlaidResponse> AddAuthAsync(string username, string password, string type, AuthOptions options = null)
+		public async Task<PlaidResponse> AddAuthAsync(string username, string password, string type, string pin = null, AuthOptions options = null)
 		{
 			var parameters = new Dictionary<string, string>()
 			{
@@ -124,6 +150,20 @@ namespace Ben.Plaid
 				{"password", password},
 				{"type", type},
 			};
+
+            if (type.ToLower() == "usaa")
+            {
+                if (pin == null)
+                {
+                    throw new ArgumentException("You must provide a pin code with USAA.", "pin");
+                }
+
+                parameters.Add("pin", pin);
+            }
+            else if(pin != null)
+            {
+                throw new ArgumentException("Pin code should only be provided with USAA.", "pin");
+            }
 
 			if (options != null)
 			{
@@ -300,7 +340,7 @@ namespace Ben.Plaid
 
 			return await HandleResponseAsync<Category>(response);
 		}
-		
+
 		private static async Task<TResult> HandleResponseAsync<TResult>(HttpResponseMessage response)
 		{
 			if (!response.IsSuccessStatusCode)
@@ -310,6 +350,13 @@ namespace Ben.Plaid
 			}
 
 			TResult result = await response.Content.ReadAsJsonAsync<TResult>();
+
+            PlaidResponse plaidResponse = result as PlaidResponse;
+            if(plaidResponse != null)
+            {
+                plaidResponse.StatusCode = response.StatusCode;
+            }
+
 			return result;
 		}
 	}
