@@ -162,7 +162,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PlaidUniversal\Plaid.csproj">
+    <ProjectReference Include="..\Plaid\Plaid.csproj">
       <Project>{f5831f4d-98f0-4fdd-abcc-a1b106c0f96d}</Project>
       <Name>Plaid</Name>
     </ProjectReference>
