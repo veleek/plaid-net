@@ -10,13 +10,13 @@ The current library includes only a simple client wrapper which defines all of t
 PlaidClient client = new PlaidClient("<client id>", "<client secret>");
 
 // Get all the available institutions.
-List<Institution> institutions = await this.Client.GetInstitutionsAsync();
+List<Institution> institutions = await client.GetInstitutionsAsync();
 
 // Adding a user 
 Institution institution = institutions.First();
-PlaidResponse authResponse = await this.Client.AddAuthAsync("<user name>", "<password>", institution.Type);
+PlaidResponse authResponse = await client.AddAuthAsync("<user name>", "<password>", institution.Type);
 
 // Pull out the access token and get all the transactions
 string accessToken = authResponse.AccessToken;
-PlaidResponse getTransactionsResponse = await this.Client.GetTransactionsAsync(accessToken);
+PlaidResponse getTransactionsResponse = await client.GetTransactionsAsync(accessToken);
 ```
