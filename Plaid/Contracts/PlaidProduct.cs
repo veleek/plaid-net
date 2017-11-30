@@ -7,5 +7,6 @@ namespace Ben.Plaid
 		Auth,
 		Balance,
 		Info,
+		Income,
 	}
 }
