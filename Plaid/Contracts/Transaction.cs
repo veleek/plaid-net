@@ -6,44 +6,44 @@ namespace Ben.Plaid
     /// <summary>
     /// Details about an individual transaction.
     /// </summary>
-	public class Transaction
-	{
+    public class Transaction
+    {
         /// <summary>
         /// The unique id of the transaction.
         /// </summary>
-		[JsonProperty("_id")]
-		public string Id { get; set; }
+        [JsonProperty("_id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// The id of the account in which this transaction occurred.
         /// </summary>
-		[JsonProperty("_account")]
-		public string AccountId { get; set; }
+        [JsonProperty("_account")]
+        public string AccountId { get; set; }
 
         /// <summary>
         /// The settled dollar value.Positive values when money moves out of the account; negative values when money moves in.
         /// </summary>
-		public double Amount { get; set; }
+        public double Amount { get; set; }
 
         /// <summary>
         /// The date that the transaction was posted by the financial institution.
         /// </summary>
-		public DateTime Date { get; set; }
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// The name of the merchant/account associated with the transaction.
         /// </summary>
-		public string Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Additional metadata about a transaction
         /// </summary>
-		public TransactionMetadata Meta { get; set; }
+        public TransactionMetadata Meta { get; set; }
 
         /// <summary>
         /// When true, identifies the transaction as pending or unsettled.  Pending transaction details (name, type, amount) may change before they are settled.
         /// </summary>
-		public bool Pending { get; set; }
+        public bool Pending { get; set; }
 
         /// <summary>
         /// Gets or sets the id of a posted transaction's associated pending transcation - where applicable.
@@ -54,18 +54,18 @@ namespace Ben.Plaid
         /// <summary>
         /// The type of the transaction.
         /// </summary>
-		public TransactionType Type { get; set; }
+        public TransactionType Type { get; set; }
 
         /// <summary>
         /// An hierarchical array of the categories to which this transaction belongs. See category.
         /// </summary>
-		public string[] Category { get; set; }
+        public string[] Category { get; set; }
 
         /// <summary>
         /// The id of the category to which this transaction belongs. See category.
         /// </summary>
-		[JsonProperty("category_id")]
-		public string CategoryId { get; set; }
+        [JsonProperty("category_id")]
+        public string CategoryId { get; set; }
 
         /// <summary>
         /// A numeric representation of our confidence in the meta data we attached to the transaction. In the case of a score &lt;.9 we will default to guaranteed and known information.
@@ -78,12 +78,12 @@ namespace Ben.Plaid
         }
     }
 
-	public class TransactionMetadata
-	{
+    public class TransactionMetadata
+    {
         /// <summary>
         /// Detailed merchant location data including address, city, state, zip code, and geocoordinates where available.
         /// </summary>
-		public TransactionLocation Location { get; set; }
+        public TransactionLocation Location { get; set; }
 
         /// <summary>
         /// Phone number associated with the merchant.
@@ -94,39 +94,39 @@ namespace Ben.Plaid
         /// Foursquare ID where available.
         /// </summary>
         public string Ids { get; set; }
-	}
+    }
 
-	public class TransactionLocation
-	{
-		public string Address { get; set; }
+    public class TransactionLocation
+    {
+        public string Address { get; set; }
 
-		public string City { get; set; }
+        public string City { get; set; }
 
-		public string State { get; set; }
+        public string State { get; set; }
 
-		public string Zip { get; set; }
+        public string Zip { get; set; }
 
-		public Coordinates Coordinates { get; set; }
-	}
+        public Coordinates Coordinates { get; set; }
+    }
 
-	public class Coordinates
-	{
-		[JsonProperty("lat")]
-		public double Latitude { get; set; }
+    public class Coordinates
+    {
+        [JsonProperty("lat")]
+        public double Latitude { get; set; }
 
-		[JsonProperty("lon")]
-		public double Longitude { get; set; }
-	}
+        [JsonProperty("lon")]
+        public double Longitude { get; set; }
+    }
 
     /// <summary>
     /// Information about the type of a transaction.
     /// </summary>
-	public class TransactionType
-	{
+    public class TransactionType
+    {
         /// <summary>
         /// Gets or sets the primary transaction type.
         /// </summary>
-		public PrimaryTransactionType Primary { get; set; }
+        public PrimaryTransactionType Primary { get; set; }
 
         public override string ToString()
         {
@@ -148,34 +148,34 @@ namespace Ben.Plaid
     /// <summary>
     /// A numeric representation of our confidence in the metadata associated with a transaction.
     /// </summary>
-	public class TransactionScore
-	{
+    public class TransactionScore
+    {
         /// <summary>
         /// The overall confidence for the request.
         /// </summary>
-		public double Master { get; set; }
+        public double Master { get; set; }
 
         /// <summary>
         /// Details about the confidence of specific values the provided metadata.
         /// </summary>
-		public TransactionDetailScore Detail { get; set; }
-	}
+        public TransactionDetailScore Detail { get; set; }
+    }
 
     /// <summary>
     /// Details about the confidence of specific values the provided metadata.
     /// </summary>
-	public class TransactionDetailScore
-	{
+    public class TransactionDetailScore
+    {
         public double Name { get; set; }
 
-		public double Address { get; set; }
+        public double Address { get; set; }
 
-		public double City { get; set; }
+        public double City { get; set; }
 
-		public double State { get; set; }
+        public double State { get; set; }
 
-		public double Zip { get; set; }
+        public double Zip { get; set; }
 
-		public double Coordinates { get; set; }
-	}
+        public double Coordinates { get; set; }
+    }
 }
